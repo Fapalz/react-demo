@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import '../assets/styles/chat-message.scss'
 
 interface ChatMessageProps {
   id: number

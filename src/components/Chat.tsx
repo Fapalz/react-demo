@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import '../assets/styles/chat.scss'
 import ChatMessage from './ChatMessage';
+import ChatSendForm from './ChatSendForm';
 
 interface IMessage {
   id: number,
@@ -12,8 +13,8 @@ interface IMessage {
 
 const Chat:FC = () => {
 
-  const [inputMessage, setInputMessage] = useState('')
   const [messages, setMessages] = useState<IMessage[]>([])
+  const chatMessagesWrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setMessages(
@@ -45,40 +46,99 @@ const Chat:FC = () => {
           message: 'Hello',
           time: '11:20',
           status: 'read'
+        },{
+          id: 5,
+          author_id: 1,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },
+        {
+          id: 6,
+          author_id: 2,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },
+        {
+          id: 7,
+          author_id: 1,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },
+        {
+          id: 8,
+          author_id: 2,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },{
+          id: 9,
+          author_id: 1,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },
+        {
+          id: 10,
+          author_id: 2,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },
+        {
+          id: 11,
+          author_id: 1,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
+        },
+        {
+          id: 12,
+          author_id: 2,
+          message: 'Hello',
+          time: '11:20',
+          status: 'read'
         }
       ]
     )
   },[])
 
-  const sendMessage = () => {
+  useEffect(() => {
+    scrollChat()
+  }, [messages])
 
-    setInputMessage('')
+  const scrollChat = () => {
+    const wrapper = chatMessagesWrapperRef.current
+    if(wrapper) {
+      wrapper.scrollTop = wrapper.scrollHeight
+    }
 
-    setMessages([...messages, {
-      id: 1,
-      author_id: 1,
-      message: inputMessage,
-      time: '11:20',
-      status: 'read'
-    }])
-    
+    console.log(chatMessagesWrapperRef.current)
+  }
+
+  const addMessage = (message:IMessage) => {
+    setMessages([...messages, message])
+    //scrollChat()
   }
 
   const author:number = 1;
 
   return (
     <div className='chat'>
-      <div className='chat__messages-container'>
-        {messages.map((message, i) => 
-          <div className='chat__message-item' style={ {justifyContent: author === message.author_id ? 'flex-end' : 'flex-start'}}>
-            <ChatMessage key={message.id} id={message.id} author_id={message.author_id} message={message.message} time={message.time} status={message.status} />
-          </div>
-        )}
+      <div className='chat__messages-container' ref={chatMessagesWrapperRef}>
+        <div className='chat__messages-inner'>
+          {messages.map((message, i) => 
+            <div className='chat__message-item' style={ {justifyContent: author === message.author_id ? 'flex-end' : 'flex-start'}}>
+              <ChatMessage key={message.id} id={message.id} author_id={message.author_id} message={message.message} time={message.time} status={message.status} />
+            </div>
+          )}
+        </div>
       </div>
       
       <div className='chat__input-wrapper'>
-        <input value={inputMessage} onChange={(e)=>{setInputMessage(e.target.value)}} className='chat-input' type="text" />
-        <button onClick={sendMessage}>send</button>
+        <ChatSendForm author_id={author} send={addMessage}/>
       </div>
     </div>
   );

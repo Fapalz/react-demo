@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './assets/styles/app.scss'
+import List from './components/List';
+import AppRouter from './components/AppRouter';
+import { Link } from 'react-router-dom';
 
-function App() {
+const App:FC = () => {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <List></List>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -18,7 +23,12 @@ function App() {
         >
           Learn React
         </a>
+        <Link className="App-link" to="/">Home</Link>
+        <Link className="App-link" to="/todo">Todo</Link>
+        <Link className="App-link" to="/chat">Chat</Link>
+        <Link className="App-link" to="/account">Account</Link>
       </header>
+      <AppRouter></AppRouter>
     </div>
   );
 }

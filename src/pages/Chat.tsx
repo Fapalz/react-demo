@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import ChatWrapper from '../components/Chat'
+import ChatWrapper from '../components/Chat/Chat'
 const Chat:FC = () => {
   return (
     <div>

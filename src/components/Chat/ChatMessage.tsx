@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
-import '../assets/styles/chat-message.scss'
+import '../../assets/styles/chat-message.scss'
 
 interface ChatMessageProps {
-  id: number
   author_id: number
   message: string
   time: string
@@ -10,10 +9,10 @@ interface ChatMessageProps {
 }
 
 
-const ChatMessage:FC<ChatMessageProps> = ({message, time, status, author_id}) => {
+const ChatMessage:FC<ChatMessageProps> = ({children, message, time, status, author_id, ...props}) => {
   
   return (
-    <div className='chat-message'>
+    <div className='chat-message' {...props}>
       <div className='chat-message__text'>{message}</div>
       <div className='chat-message__time'>{time}</div>
       <div className='chat-message__status'>{status}</div>
